@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://mc8de6fxo7fd"]
+
+[ext_resource type="Texture2D" uid="uid://cv1ux2mto0tuy" path="res://Sprites/player/p2_stand.png" id="1_cbryh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uouhl"]
+radius = 31.0
+height = 96.0
+
+[node name="PlayerRoot" type="CharacterBody2D"]
+
+[node name="IdleSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_cbryh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_uouhl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
