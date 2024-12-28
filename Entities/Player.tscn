@@ -1,12 +1,75 @@
-[gd_scene load_steps=3 format=3 uid="uid://mc8de6fxo7fd"]
+[gd_scene load_steps=17 format=3 uid="uid://mc8de6fxo7fd"]
 
 [ext_resource type="Texture2D" uid="uid://cv1ux2mto0tuy" path="res://Sprites/player/p2_stand.png" id="1_cbryh"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_liyl5"]
+[ext_resource type="Texture2D" uid="uid://bpsu6prq0i4r0" path="res://Sprites/player/p3_front.png" id="3_18raq"]
+[ext_resource type="Texture2D" uid="uid://b7lnnaloicrsg" path="res://Sprites/player/p2_walk01.png" id="3_iqlo0"]
+[ext_resource type="Texture2D" uid="uid://6ka7nx0jq61k" path="res://Sprites/player/p2_walk02.png" id="4_t1hvc"]
+[ext_resource type="Texture2D" uid="uid://mb88eun6d13u" path="res://Sprites/player/p2_walk03.png" id="5_nmxls"]
+[ext_resource type="Texture2D" uid="uid://cncsvlrb21l0l" path="res://Sprites/player/p2_walk04.png" id="6_a2n8n"]
+[ext_resource type="Texture2D" uid="uid://m4ftv77uxhqb" path="res://Sprites/player/p2_walk05.png" id="7_7wl8y"]
+[ext_resource type="Texture2D" uid="uid://damaveabwpu4t" path="res://Sprites/player/p2_walk06.png" id="8_2dh20"]
+[ext_resource type="Texture2D" uid="uid://nvn8oc63hto8" path="res://Sprites/player/p2_walk07.png" id="9_2egop"]
+[ext_resource type="Texture2D" uid="uid://cv3l08gviu34" path="res://Sprites/player/p2_walk08.png" id="10_kcyxv"]
+[ext_resource type="Texture2D" uid="uid://b7fhn14se0u1l" path="res://Sprites/player/p2_walk09.png" id="11_3ije1"]
+[ext_resource type="Texture2D" uid="uid://dbj3qwj2kbs2l" path="res://Sprites/player/p2_walk10.png" id="12_qbdwq"]
+[ext_resource type="Texture2D" uid="uid://dnjcyitebscv1" path="res://Sprites/player/p2_walk11.png" id="13_47inb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uouhl"]
 radius = 31.0
 height = 96.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_dgodl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_iqlo0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t1hvc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nmxls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_a2n8n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7wl8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2dh20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2egop")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_kcyxv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_3ije1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_qbdwq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_47inb")
+}],
+"loop": true,
+"name": &"aawalk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_18raq")
+}],
+"loop": true,
+"name": &"alt",
+"speed": 5.0
+}]
+
 [node name="PlayerRoot" type="CharacterBody2D"]
+script = ExtResource("1_liyl5")
 
 [node name="IdleSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_cbryh")
@@ -16,3 +79,7 @@ shape = SubResource("CapsuleShape2D_uouhl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+
+[node name="WalkSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dgodl")
+animation = &"aawalk"

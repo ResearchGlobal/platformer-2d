@@ -1,15 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://k8x2ryx0ixhk"]
+[gd_scene load_steps=6 format=4 uid="uid://k8x2ryx0ixhk"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_6s73p"]
 [ext_resource type="TileSet" uid="uid://wnkgaydjjixa" path="res://Sprites/main.tres" id="2_6r1ek"]
-[ext_resource type="Texture2D" uid="uid://bcho05mx04fs6" path="res://Sprites/tile_0110.png" id="3_22vyf"]
-[ext_resource type="Script" path="res://Scripts/RigidBody2d.cs" id="3_bwrr4"]
 [ext_resource type="Script" path="res://Scripts/TileMapLayer.cs" id="3_mstxq"]
+[ext_resource type="PackedScene" uid="uid://urtt82h8cscx" path="res://Entities/TrafficLight.tscn" id="4_f72oi"]
 [ext_resource type="PackedScene" uid="uid://mc8de6fxo7fd" path="res://Entities/Player.tscn" id="6_met3o"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fy2rp"]
-radius = 9.0
-height = 24.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6s73p")
@@ -19,23 +14,9 @@ tile_map_data = PackedByteArray("AAARACIAAAABAAAAAAASACIAAAABAAAAAAATACIAAAABAAA
 tile_set = ExtResource("2_6r1ek")
 script = ExtResource("3_mstxq")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(754, 601)
-contact_monitor = true
-max_contacts_reported = 1
-script = ExtResource("3_bwrr4")
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
-position = Vector2(-2, -1)
-texture = ExtResource("3_22vyf")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2(-2, -1)
-shape = SubResource("CapsuleShape2D_fy2rp")
+[node name="TrafficLight" parent="." instance=ExtResource("4_f72oi")]
+position = Vector2(806, 637)
 
 [node name="PlayerRoot" parent="." instance=ExtResource("6_met3o")]
 position = Vector2(486, 642)
 scale = Vector2(0.25, 0.25)
-
-[connection signal="body_entered" from="RigidBody2D" to="TileMapLayer" method="OnTileMapEntered"]
