@@ -1,6 +1,24 @@
-using Godot;
 using System;
+using Godot;
 
-public partial class RedState : Node
+public partial class RedState : StateTL
 {
+	// https://www.youtube.com/watch?v=Kcg1SEgDqyk 12:55
+
+	public override void Enter()
+	{
+		GetNode<Sprite2D>("RedDude").Visible = true;
+		GetNode<Timer>("Timer2s").Start();
+	}
+
+	public override void Exit()
+	{
+		GetNode<Sprite2D>("RedDude").Visible = false;
+		GetNode<Timer>("Timer2s").Stop();
+	}
+
+	private void OnTimerTmeout()
+	{
+		fsm.TransitionTo("Green");
+	}
 }

@@ -15,7 +15,7 @@ tile_set = ExtResource("2_6r1ek")
 script = ExtResource("3_mstxq")
 
 [node name="TrafficLight" parent="." instance=ExtResource("4_f72oi")]
-position = Vector2(806, 637)
+position = Vector2(737, 644)
 
 [node name="PlayerRoot" parent="." instance=ExtResource("6_met3o")]
 position = Vector2(486, 642)

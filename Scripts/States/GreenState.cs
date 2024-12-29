@@ -11,6 +11,12 @@ public partial class GreenState : StateTL
 		GetNode<Timer>("Timer2s").Start();
 	}
 
+	public override void Exit()
+	{
+		GetNode<Sprite2D>("GreenDude").Visible = false;
+		GetNode<Timer>("Timer2s").Stop();
+	}
+
 	private void OnTimerTmeout()
 	{
 		fsm.TransitionTo("Yellow");

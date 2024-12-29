@@ -15,7 +15,6 @@ public partial class TrafficLightFSM : Node
 		_stateNodes = new Dictionary<string, StateTL>();
 		foreach (Node node in GetChildren())
 		{
-			GD.Print("Node name: " + node.Name);
 			if (node is StateTL s)
 			{
 				_stateNodes[node.Name] = s;
