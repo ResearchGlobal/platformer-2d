@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://urtt82h8cscx"]
+[gd_scene load_steps=8 format=3 uid="uid://urtt82h8cscx"]
 
 [ext_resource type="Script" path="res://Scripts/RigidBody2d.cs" id="1_0h4l1"]
 [ext_resource type="Texture2D" uid="uid://bcho05mx04fs6" path="res://Sprites/tile_0110.png" id="2_l0kpv"]
 [ext_resource type="Script" path="res://Scripts/TrafficLightFSM.cs" id="3_dxn8q"]
+[ext_resource type="Texture2D" uid="uid://dlkvkenuxggtw" path="res://Sprites/tile_0196.png" id="3_wrsl2"]
+[ext_resource type="Script" path="res://Scripts/States/GreenState.cs" id="3_xvp41"]
+[ext_resource type="Texture2D" uid="uid://7c1sf87cbopd" path="res://Sprites/tile_0079.png" id="5_pdti2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fy2rp"]
 radius = 9.0
@@ -15,10 +18,6 @@ max_contacts_reported = 1
 script = ExtResource("1_0h4l1")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-2, -1)
-texture = ExtResource("2_l0kpv")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -1)
 shape = SubResource("CapsuleShape2D_fy2rp")
@@ -28,7 +27,31 @@ script = ExtResource("3_dxn8q")
 initialState = NodePath("Green")
 
 [node name="Green" type="Node" parent="FSM"]
+script = ExtResource("3_xvp41")
+
+[node name="GreenDude" type="Sprite2D" parent="FSM/Green"]
+position = Vector2(0, -3)
+texture = ExtResource("3_wrsl2")
+
+[node name="Timer2s" type="Timer" parent="FSM/Green"]
+wait_time = 2.0
 
 [node name="Yellow" type="Node" parent="FSM"]
 
+[node name="YellowDude" type="Sprite2D" parent="FSM/Yellow"]
+position = Vector2(0, -3)
+texture = ExtResource("2_l0kpv")
+
+[node name="Timer2s" type="Timer" parent="FSM/Yellow"]
+wait_time = 2.0
+
 [node name="Red" type="Node" parent="FSM"]
+
+[node name="RedDude" type="Sprite2D" parent="FSM/Red"]
+position = Vector2(0, -3)
+texture = ExtResource("5_pdti2")
+
+[node name="Timer2s" type="Timer" parent="FSM/Red"]
+wait_time = 2.0
+
+[connection signal="timeout" from="FSM/Green/Timer2s" to="FSM/Green" method="OnTimerTmeout"]

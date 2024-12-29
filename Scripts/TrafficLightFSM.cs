@@ -7,47 +7,50 @@ public partial class TrafficLightFSM : Node
 	[Export]
 	public NodePath initialState;
 
-	private Dictionary<string, StateTL> _states;
-	private StateTL _currentState;
+	private Dictionary<string, StateTL> _stateNodes;
+	private StateTL _currentStateNode;
 
 	public override void _Ready()
 	{
-		_states = new Dictionary<string, StateTL>();
+		_stateNodes = new Dictionary<string, StateTL>();
 		foreach (Node node in GetChildren())
 		{
+			GD.Print("Node name: " + node.Name);
 			if (node is StateTL s)
 			{
-				_states[node.Name] = s;
+				_stateNodes[node.Name] = s;
 				s.fsm = this;
 				s.Ready();
 				s.Exit(); //reset all states
 			}
 		}
-		_currentState = GetNode<StateTL>(initialState);
-		_currentState.Enter();
+		_currentStateNode = GetNode<StateTL>(initialState);
+		_currentStateNode.Enter();
 	}
 
 	public override void _Process(double delta)
 	{
-		_currentState.Update((float)delta);
+		_currentStateNode.Update((float)delta);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		_currentState.PhysicsUpdate((float)delta);
+		_currentStateNode.PhysicsUpdate((float)delta);
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		_currentState.HandleInput(@event);
+		_currentStateNode.HandleInput(@event);
 	}
 
+	//Consider typing key to key of nodes in tree
+	// see https://plbonneville.com/blog/string-literal-types-in-csharp/ for C# literal types
 	public void TransitionTo(string key)
 	{
-		if (!_states.ContainsKey(key) || _currentState == _states[key])
+		if (!_stateNodes.ContainsKey(key) || _currentStateNode == _stateNodes[key])
 			return;
-		_currentState.Exit();
-		_currentState = _states[key];
-		_currentState.Enter();
+		_currentStateNode.Exit();
+		_currentStateNode = _stateNodes[key];
+		_currentStateNode.Enter();
 	}
 }
