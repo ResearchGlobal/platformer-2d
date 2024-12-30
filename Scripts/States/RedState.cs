@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class RedState : StateTL
+public partial class RedState : StateTL<ShapeShifter>
 {
 	// https://www.youtube.com/watch?v=Kcg1SEgDqyk 12:55
 
@@ -19,6 +19,6 @@ public partial class RedState : StateTL
 
 	private void OnTimerTmeout()
 	{
-		fsm.TransitionTo("Green");
+		stateMachine.TransitionTo("Green");
 	}
 }

@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public partial class TrafficLightFSM : Node
+public partial class ShapeShifter : Node
 {
 	[Export]
 	public NodePath initialState;
 
-	private Dictionary<string, StateTL> _stateNodes;
-	private StateTL _currentStateNode;
+	private Dictionary<string, StateTL<ShapeShifter>> _stateNodes;
+	private StateTL<ShapeShifter> _currentStateNode;
 
 	public override void _Ready()
 	{
-		_stateNodes = new Dictionary<string, StateTL>();
+		_stateNodes = new Dictionary<string, StateTL<ShapeShifter>>();
 		foreach (Node node in GetChildren())
 		{
-			if (node is StateTL s)
+			if (node is StateTL<ShapeShifter> s)
 			{
 				_stateNodes[node.Name] = s;
-				s.fsm = this;
+				s.stateMachine = this;
 				s.Ready();
 				s.Exit(); //reset all states
 			}
 		}
-		_currentStateNode = GetNode<StateTL>(initialState);
+		_currentStateNode = GetNode<StateTL<ShapeShifter>>(initialState);
 		_currentStateNode.Enter();
 	}
 

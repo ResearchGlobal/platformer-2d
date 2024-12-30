@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://urtt82h8cscx"]
+[gd_scene load_steps=9 format=3 uid="uid://urtt82h8cscx"]
 
-[ext_resource type="Script" path="res://Scripts/RigidBody2d.cs" id="1_0h4l1"]
+[ext_resource type="Script" path="res://Scripts/ShapeShifter.cs" id="1_jta6m"]
 [ext_resource type="Texture2D" uid="uid://bcho05mx04fs6" path="res://Sprites/tile_0110.png" id="2_l0kpv"]
-[ext_resource type="Script" path="res://Scripts/TrafficLightFSM.cs" id="3_dxn8q"]
 [ext_resource type="Texture2D" uid="uid://dlkvkenuxggtw" path="res://Sprites/tile_0196.png" id="3_wrsl2"]
 [ext_resource type="Script" path="res://Scripts/States/GreenState.cs" id="3_xvp41"]
 [ext_resource type="Script" path="res://Scripts/States/YellowState.cs" id="5_gmb8n"]
@@ -13,54 +12,47 @@
 radius = 9.0
 height = 24.0
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="ShapeShifter" type="RigidBody2D"]
 contact_monitor = true
 max_contacts_reported = 1
-script = ExtResource("1_0h4l1")
+script = ExtResource("1_jta6m")
+initialState = NodePath("Yellow")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fy2rp")
 metadata/_edit_group_ = true
 
-[node name="FSM" type="Node2D" parent="."]
-script = ExtResource("3_dxn8q")
-initialState = NodePath("Green")
-metadata/_edit_group_ = true
-
-[node name="Green" type="Node2D" parent="FSM"]
+[node name="Green" type="Node2D" parent="."]
 script = ExtResource("3_xvp41")
 metadata/_edit_group_ = true
 
-[node name="GreenDude" type="Sprite2D" parent="FSM/Green"]
+[node name="GreenDude" type="Sprite2D" parent="Green"]
 texture = ExtResource("3_wrsl2")
 metadata/_edit_group_ = true
 
-[node name="Timer2s" type="Timer" parent="FSM/Green"]
-wait_time = 2.0
+[node name="Timer2s" type="Timer" parent="Green"]
 
-[node name="Yellow" type="Node2D" parent="FSM"]
+[node name="Yellow" type="Node2D" parent="."]
 script = ExtResource("5_gmb8n")
 metadata/_edit_group_ = true
 
-[node name="YellowDude" type="Sprite2D" parent="FSM/Yellow"]
+[node name="YellowDude" type="Sprite2D" parent="Yellow"]
 texture = ExtResource("2_l0kpv")
 metadata/_edit_group_ = true
 
-[node name="Timer2s" type="Timer" parent="FSM/Yellow"]
-wait_time = 2.0
+[node name="Timer2s" type="Timer" parent="Yellow"]
 
-[node name="Red" type="Node2D" parent="FSM"]
+[node name="Red" type="Node2D" parent="."]
 script = ExtResource("7_dw22r")
 metadata/_edit_group_ = true
 
-[node name="RedDude" type="Sprite2D" parent="FSM/Red"]
+[node name="RedDude" type="Sprite2D" parent="Red"]
 texture = ExtResource("5_pdti2")
 metadata/_edit_group_ = true
 
-[node name="Timer2s" type="Timer" parent="FSM/Red"]
-wait_time = 2.0
+[node name="Timer2s" type="Timer" parent="Red"]
 
-[connection signal="timeout" from="FSM/Green/Timer2s" to="FSM/Green" method="OnTimerTmeout"]
-[connection signal="timeout" from="FSM/Yellow/Timer2s" to="FSM/Yellow" method="OnTimerTmeout"]
-[connection signal="timeout" from="FSM/Red/Timer2s" to="FSM/Red" method="OnTimerTmeout"]
+[connection signal="timeout" from="Green/Timer2s" to="Green" method="OnTimerTmeout"]
+[connection signal="timeout" from="Yellow/Timer2s" to="Yellow" method="OnTimerTmeout"]
+[connection signal="timeout" from="Red/Timer2s" to="Red" method="OnTimerTmeout"]

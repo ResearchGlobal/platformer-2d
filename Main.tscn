@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Main.cs" id="1_6s73p"]
 [ext_resource type="TileSet" uid="uid://wnkgaydjjixa" path="res://Sprites/main.tres" id="2_6r1ek"]
 [ext_resource type="Script" path="res://Scripts/TileMapLayer.cs" id="3_mstxq"]
-[ext_resource type="PackedScene" uid="uid://urtt82h8cscx" path="res://Entities/TrafficLight.tscn" id="4_f72oi"]
+[ext_resource type="PackedScene" uid="uid://urtt82h8cscx" path="res://Entities/ShapeShifter.tscn" id="4_f72oi"]
 [ext_resource type="PackedScene" uid="uid://mc8de6fxo7fd" path="res://Entities/Player.tscn" id="6_met3o"]
 
 [node name="Main" type="Node2D"]
@@ -18,5 +18,4 @@ script = ExtResource("3_mstxq")
 position = Vector2(44, 38)
 scale = Vector2(0.25, 0.25)
 
-[node name="RigidBody2D" parent="." instance=ExtResource("4_f72oi")]
-position = Vector2(109, 37)
+[node name="ShapeSifter" parent="." instance=ExtResource("4_f72oi")]

@@ -1,9 +1,9 @@
 using System;
 using Godot;
 
-public partial class StateTL : Node
+public partial class StateTL<FiniteStateMachine> : Node
 {
-	public TrafficLightFSM fsm;
+	public FiniteStateMachine stateMachine;
 
 	public virtual void Enter() { }
 
