@@ -22,33 +22,42 @@ public partial class Item : Node2D
 	{
 		Vector2 mousePosition = GetGlobalMousePosition();
 		LookAt(mousePosition);
-		_holdItemUpRight(ref mousePosition);
-		_ReadInput();
+		HoldItemUpRight(ref mousePosition);
+		ReadInput();
 	}
 
-	private void _ReadInput()
+	private void ReadInput()
 	{
 		if (Input.IsActionJustPressed("shoot"))
 		{
-			_shoot.Play("shoot");
+			string shootOrShootFlipped = _isFlipped ? "shoot_flipped" : "shoot";
+			_shoot.Play(shootOrShootFlipped);
 			_use.Play();
 		}
 	}
 
-	private void _holdItemUpRight(ref Vector2 mp)
+	private void HoldItemUpRight(ref Vector2 mp)
 	{
-		// Vector2 rootPosition = GetNode<Node2D>("./Item").Position;
-		// Position.
-		if (mp.X < Position.X && !_isFlipped)
+		if (ShouldFlip() && !_isFlipped)
 		{
 			_isFlipped = true;
 			_use.FlipV = true;
 		}
-
-		if (mp.X > Position.X && _isFlipped)
+		if (!ShouldFlip() && _isFlipped)
 		{
 			_isFlipped = false;
 			_use.FlipV = false;
 		}
+	}
+
+	private bool ShouldFlip()
+	{
+		float angle = Math.Abs(Rotation / (float)Math.PI * 180f % 360f);
+		if (90f <= angle && angle <= 270f)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 }
