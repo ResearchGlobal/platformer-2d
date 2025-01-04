@@ -7,9 +7,15 @@ public partial class Item : Node2D
 	public delegate void OnUseItemEventHandler(Node2D node);
 
 	private bool _isFlipped = false;
+	private AnimatedSprite2D _use;
+	private AnimationPlayer _shoot;
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() { }
+	public override void _Ready()
+	{
+		_use = GetNode<AnimatedSprite2D>("Use");
+		_shoot = GetNode<AnimationPlayer>("Shoot");
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
@@ -24,26 +30,25 @@ public partial class Item : Node2D
 	{
 		if (Input.IsActionJustPressed("shoot"))
 		{
-			GetNode<AnimationPlayer>("Shoot").Play("shoot");
-			GetNode<AnimatedSprite2D>("Use").Play();
+			_shoot.Play("shoot");
+			_use.Play();
 		}
 	}
 
 	private void _holdItemUpRight(ref Vector2 mp)
 	{
-		Vector2 rootPosition = GetNode<Node2D>("Item").Position;
-		if (mp.X < rootPosition.X && !_isFlipped)
+		// Vector2 rootPosition = GetNode<Node2D>("./Item").Position;
+		// Position.
+		if (mp.X < Position.X && !_isFlipped)
 		{
-			AnimatedSprite2D use = GetNode<AnimatedSprite2D>("Item/Use");
 			_isFlipped = true;
-			use.FlipV = true;
+			_use.FlipV = true;
 		}
 
-		if (mp.X > rootPosition.X && _isFlipped)
+		if (mp.X > Position.X && _isFlipped)
 		{
-			AnimatedSprite2D use = GetNode<AnimatedSprite2D>("Item/Use");
 			_isFlipped = false;
-			use.FlipV = false;
+			_use.FlipV = false;
 		}
 	}
 }
