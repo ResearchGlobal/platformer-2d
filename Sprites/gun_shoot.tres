@@ -1,0 +1,29 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://0iaud1fpgwgy"]
+
+[ext_resource type="Texture2D" uid="uid://bfwkfd3jc7sxm" path="res://Sprites/items/raygun.png" id="1_et2ui"]
+[ext_resource type="Texture2D" uid="uid://rgr3muum8mt8" path="res://Sprites/items/raygunPurple.png" id="1_nupm6"]
+[ext_resource type="Texture2D" uid="uid://cqqiv0p8ahn6o" path="res://Sprites/items/raygunBig.png" id="2_52n3u"]
+[ext_resource type="Texture2D" uid="uid://jv1yk1hjipvm" path="res://Sprites/items/raygunPurpleBig.png" id="4_f2o6w"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_nupm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_et2ui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52n3u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f2o6w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_nupm6")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 15.0
+}]

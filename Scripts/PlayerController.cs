@@ -3,6 +3,9 @@ using Godot;
 
 public partial class PlayerController : CharacterBody2D
 {
+	[Export]
+	private bool _isGravityEnabled;
+
 	public float moveSpeed = 150.0f;
 	public float jumpVelocity = 400.0f;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -25,7 +28,7 @@ public partial class PlayerController : CharacterBody2D
 		_UpdateSpriteRendered(velocity.X);
 
 		// apply gravity after reading input
-		if (!IsOnFloor())
+		if (_isGravityEnabled && !IsOnFloor())
 		{
 			velocity.Y += gravity * (float)delta;
 		}

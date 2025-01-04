@@ -17,5 +17,6 @@ script = ExtResource("3_mstxq")
 [node name="PlayerRoot" parent="." instance=ExtResource("6_met3o")]
 position = Vector2(44, 38)
 scale = Vector2(0.25, 0.25)
+_isGravityEnabled = true
 
 [node name="ShapeSifter" parent="." instance=ExtResource("4_f72oi")]
