@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://Scripts/States/RedState.cs" id="7_dw22r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fy2rp"]
-radius = 9.0
-height = 24.0
+radius = 11.0
+height = 28.0
 
 [node name="ShapeShifter" type="RigidBody2D" groups=["enemy_npc"]]
 contact_monitor = true
@@ -20,7 +20,9 @@ script = ExtResource("1_jta6m")
 initialState = NodePath("Yellow")
 metadata/_edit_group_ = true
 
-[node name="Health" parent="." groups=["enemy_npc"] instance=ExtResource("2_3qpiu")]
+[node name="Health" parent="." instance=ExtResource("2_3qpiu")]
+position = Vector2(0, -15)
+scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fy2rp")

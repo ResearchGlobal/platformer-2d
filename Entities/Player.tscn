@@ -74,6 +74,7 @@ height = 96.0
 script = ExtResource("1_liyl5")
 
 [node name="Health" parent="." instance=ExtResource("15_v074i")]
+position = Vector2(0, -55)
 
 [node name="WalkSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dgodl")
