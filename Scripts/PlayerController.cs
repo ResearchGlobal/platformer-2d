@@ -6,10 +6,9 @@ public partial class PlayerController : CharacterBody2D
 	[Export]
 	private bool _isGravityEnabled;
 
-	public float moveSpeed = 150.0f;
-	public float jumpVelocity = 400.0f;
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
+	private float _moveSpeed = 150.0f;
+	private float _jumpVelocity = 400.0f;
+	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private Sprite2D _idleSprite;
 	private AnimatedSprite2D _walkSprite;
 
@@ -23,31 +22,31 @@ public partial class PlayerController : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
-		_ReadInput(ref velocity);
+		ReadInput(ref velocity);
 
-		_UpdateSpriteRendered(velocity.X);
+		UpdateSpriteRendered(velocity.X);
 
 		// apply gravity after reading input
 		if (_isGravityEnabled && !IsOnFloor())
 		{
-			velocity.Y += gravity * (float)delta;
+			velocity.Y += _gravity * (float)delta;
 		}
 
 		Velocity = velocity;
 		MoveAndSlide();
 	}
 
-	private void _ReadInput(ref Vector2 velocity)
+	private void ReadInput(ref Vector2 velocity)
 	{
 		Vector2 moveInput = Input.GetVector("left", "right", "up", "down");
-		velocity.X = moveInput.X * moveSpeed;
+		velocity.X = moveInput.X * _moveSpeed;
 		if (moveInput.Y < 0f)
 		{
-			velocity.Y = moveInput.Y * moveSpeed;
+			velocity.Y = moveInput.Y * _moveSpeed;
 		}
 	}
 
-	private void _UpdateSpriteRendered(float velX)
+	private void UpdateSpriteRendered(float velX)
 	{
 		bool isWalking = velX != 0;
 		_idleSprite.Visible = !isWalking;

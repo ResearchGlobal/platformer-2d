@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://mc8de6fxo7fd"]
+[gd_scene load_steps=19 format=3 uid="uid://mc8de6fxo7fd"]
 
 [ext_resource type="Texture2D" uid="uid://cv1ux2mto0tuy" path="res://Sprites/player/p2_stand.png" id="1_cbryh"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_liyl5"]
@@ -14,11 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://b7fhn14se0u1l" path="res://Sprites/player/p2_walk09.png" id="11_3ije1"]
 [ext_resource type="Texture2D" uid="uid://dbj3qwj2kbs2l" path="res://Sprites/player/p2_walk10.png" id="12_qbdwq"]
 [ext_resource type="Texture2D" uid="uid://dnjcyitebscv1" path="res://Sprites/player/p2_walk11.png" id="13_47inb"]
-[ext_resource type="PackedScene" uid="uid://bv5snw5yopd72" path="res://Entities/Item.tscn" id="15_upnx4"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uouhl"]
-radius = 31.0
-height = 96.0
+[ext_resource type="PackedScene" uid="uid://bv5snw5yopd72" path="res://Entities/RangedWeapon.tscn" id="15_upnx4"]
+[ext_resource type="PackedScene" uid="uid://ds1bgo4547nfs" path="res://Entities/Health.tscn" id="15_v074i"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dgodl"]
 animations = [{
@@ -69,8 +66,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uouhl"]
+radius = 31.0
+height = 96.0
+
 [node name="PlayerRoot" type="CharacterBody2D"]
 script = ExtResource("1_liyl5")
+
+[node name="Health" parent="." instance=ExtResource("15_v074i")]
+
+[node name="WalkSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dgodl")
+animation = &"aawalk"
 
 [node name="IdleSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_cbryh")
@@ -80,9 +87,5 @@ shape = SubResource("CapsuleShape2D_uouhl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
-
-[node name="WalkSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_dgodl")
-animation = &"aawalk"
 
 [node name="Item" parent="." instance=ExtResource("15_upnx4")]

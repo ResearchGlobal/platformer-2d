@@ -1,14 +1,18 @@
 using System;
 using Godot;
 
-public partial class Item : Node2D
+public partial class RangedWeapon : Node2D
 {
+	[Export]
+	private PackedScene Projectile;
+
 	[Signal]
 	public delegate void OnUseItemEventHandler(Node2D node);
 
 	private bool _isFlipped = false;
 	private AnimatedSprite2D _use;
 	private AnimationPlayer _shoot;
+	private float _projectileSpeed = 600f;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -29,11 +33,22 @@ public partial class Item : Node2D
 	private void ReadInput()
 	{
 		if (Input.IsActionJustPressed("shoot"))
-		{
-			string shootOrShootFlipped = _isFlipped ? "shoot_flipped" : "shoot";
-			_shoot.Play(shootOrShootFlipped);
-			_use.Play();
-		}
+			FireRangedWeapon();
+	}
+
+	private void FireRangedWeapon()
+	{
+		//fire animations
+		string shootOrShootFlipped = _isFlipped ? "shoot_flipped" : "shoot";
+		_shoot.Play(shootOrShootFlipped);
+		_use.Play();
+
+		//instantiate and render projectile
+		RigidBody2D projectile = Projectile.Instantiate<RigidBody2D>();
+		projectile.Rotation = GlobalRotation;
+		projectile.Position = GlobalPosition;
+		projectile.LinearVelocity = _projectileSpeed * projectile.Transform.X;
+		GetTree().Root.AddChild(projectile);
 	}
 
 	private void HoldItemUpRight(ref Vector2 mp)

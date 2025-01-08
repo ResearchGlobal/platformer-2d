@@ -24,6 +24,10 @@ window/size/viewport_height=900
 
 project/assembly_name="platformer-2d"
 
+[global_group]
+
+enemy_npc="group that tracks enemy npc"
+
 [input]
 
 up={
