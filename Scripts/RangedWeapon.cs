@@ -12,7 +12,7 @@ public partial class RangedWeapon : Node2D
 	private bool _isFlipped = false;
 	private AnimatedSprite2D _use;
 	private AnimationPlayer _shoot;
-	private float _projectileSpeed = 600f;
+	private float _projectileSpeed = 100f;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -45,8 +45,8 @@ public partial class RangedWeapon : Node2D
 
 		//instantiate and render projectile
 		RigidBody2D projectile = Projectile.Instantiate<RigidBody2D>();
-		projectile.Rotation = GlobalRotation;
-		projectile.Position = GlobalPosition;
+		projectile.Rotation = _use.GlobalRotation;
+		projectile.Position = _use.GlobalPosition;
 		projectile.LinearVelocity = _projectileSpeed * projectile.Transform.X;
 		GetTree().Root.AddChild(projectile);
 	}

@@ -15,6 +15,7 @@ public partial class Projectile : RigidBody2D
 
 	public void OnBodyEntered(Node2D node)
 	{
+		GD.Print("Projectile body entered called");
 		if (node.IsInGroup("enemy_npc"))
 		{
 			GD.Print("projectile collided with " + node.Name);

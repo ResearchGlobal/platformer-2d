@@ -1,46 +1,31 @@
 [gd_scene load_steps=4 format=3 uid="uid://d4aig5wy0nfwx"]
 
 [ext_resource type="Texture2D" uid="uid://kqhevxitqtit" path="res://Sprites/bullet.png" id="1_bbmns"]
-
-[sub_resource type="CSharpScript" id="CSharpScript_38uum"]
-script/source = "using Godot;
-using System;
-
-public partial class Projectile : RigidBody2D
-{
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-}
-"
+[ext_resource type="Script" path="res://Scripts/Projectile.cs" id="1_nk8qt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r11bf"]
-radius = 3.0
-height = 18.0
+radius = 186.0
+height = 1038.0
 
 [node name="Projectile" type="RigidBody2D"]
 gravity_scale = 0.0
-script = SubResource("CSharpScript_38uum")
+script = ExtResource("1_nk8qt")
+metadata/_edit_group_ = true
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 rotation = 1.5708
+scale = Vector2(0.01, 0.01)
 shape = SubResource("CapsuleShape2D_r11bf")
+metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(0, 0.55, 1, 1)
 rotation = 1.5708
-scale = Vector2(0.015, 0.015)
+scale = Vector2(0.01, 0.01)
 texture = ExtResource("1_bbmns")
+metadata/_edit_group_ = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 autostart = true
-
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
