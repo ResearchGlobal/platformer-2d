@@ -15,10 +15,12 @@ public partial class Projectile : RigidBody2D
 
 	public void OnBodyEntered(Node node)
 	{
-		GD.Print("Projectile body entered called " + node.Name);
 		if (node.IsInGroup("enemy_npc"))
 		{
-			GD.Print("projectile collided with " + node.Name);
+			//cast to Shapeshifter - should really be some enemy prototype that inherits the onDmaage call
+			var localNode = (ShapeShifter)node;
+			localNode.OnDamage();
+			QueueFree();
 		}
 	}
 }

@@ -17,7 +17,7 @@ height = 28.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_jta6m")
-initialState = NodePath("Yellow")
+initialState = NodePath("Green")
 metadata/_edit_group_ = true
 
 [node name="Health" parent="." instance=ExtResource("2_3qpiu")]
@@ -36,8 +36,6 @@ metadata/_edit_group_ = true
 texture = ExtResource("3_wrsl2")
 metadata/_edit_group_ = true
 
-[node name="Timer2s" type="Timer" parent="Green"]
-
 [node name="Yellow" type="Node2D" parent="."]
 script = ExtResource("5_gmb8n")
 metadata/_edit_group_ = true
@@ -46,8 +44,6 @@ metadata/_edit_group_ = true
 texture = ExtResource("2_l0kpv")
 metadata/_edit_group_ = true
 
-[node name="Timer2s" type="Timer" parent="Yellow"]
-
 [node name="Red" type="Node2D" parent="."]
 script = ExtResource("7_dw22r")
 metadata/_edit_group_ = true
@@ -55,9 +51,3 @@ metadata/_edit_group_ = true
 [node name="RedDude" type="Sprite2D" parent="Red"]
 texture = ExtResource("5_pdti2")
 metadata/_edit_group_ = true
-
-[node name="Timer2s" type="Timer" parent="Red"]
-
-[connection signal="timeout" from="Green/Timer2s" to="Green" method="OnTimerTmeout"]
-[connection signal="timeout" from="Yellow/Timer2s" to="Yellow" method="OnTimerTmeout"]
-[connection signal="timeout" from="Red/Timer2s" to="Red" method="OnTimerTmeout"]

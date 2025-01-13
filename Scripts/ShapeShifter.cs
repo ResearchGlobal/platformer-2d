@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
+/// <summary>
+/// Need to start thinking about how to properly structure different enemy types.
+/// Refer back to component pattern from Nystrom's Game Programming Patterns book.
+/// </summary>
 public partial class ShapeShifter : Node
 {
 	[Export]
@@ -40,6 +44,22 @@ public partial class ShapeShifter : Node
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		_currentStateNode.HandleInput(@event);
+	}
+
+	public void OnDamage()
+	{
+		if (_currentStateNode.Name == "Green")
+		{
+			TransitionTo("Yellow");
+		}
+		else if (_currentStateNode.Name == "Yellow")
+		{
+			TransitionTo("Red");
+		}
+		else if (_currentStateNode.Name == "Red")
+		{
+			TransitionTo("Green");
+		}
 	}
 
 	//Consider typing key to key of nodes in tree

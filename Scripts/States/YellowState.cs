@@ -8,17 +8,10 @@ public partial class YellowState : StateTL<ShapeShifter>
 	public override void Enter()
 	{
 		GetNode<Sprite2D>("YellowDude").Visible = true;
-		GetNode<Timer>("Timer2s").Start();
 	}
 
 	public override void Exit()
 	{
 		GetNode<Sprite2D>("YellowDude").Visible = false;
-		GetNode<Timer>("Timer2s").Stop();
-	}
-
-	private void OnTimerTmeout()
-	{
-		stateMachine.TransitionTo("Red");
 	}
 }
