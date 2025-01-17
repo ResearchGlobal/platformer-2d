@@ -13,7 +13,7 @@ public partial class Projectile : RigidBody2D
 		timer.Timeout += () => QueueFree();
 	}
 
-	public void OnBodyEntered(Node node)
+	public void OnBodyEntered(Node2D node)
 	{
 		if (node.IsInGroup("enemy_npc"))
 		{
