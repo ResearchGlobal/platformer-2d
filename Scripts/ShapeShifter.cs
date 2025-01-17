@@ -11,6 +11,7 @@ public partial class ShapeShifter : Node
 	[Export]
 	public NodePath initialState;
 
+	private ProgressBar _healthBar;
 	private Dictionary<string, StateTL<ShapeShifter>> _stateNodes;
 	private StateTL<ShapeShifter> _currentStateNode;
 
@@ -29,6 +30,8 @@ public partial class ShapeShifter : Node
 		}
 		_currentStateNode = GetNode<StateTL<ShapeShifter>>(initialState);
 		_currentStateNode.Enter();
+		_healthBar = GetNode<ProgressBar>("Health/HealthBar");
+		_healthBar.Value = _healthBar.MaxValue;
 	}
 
 	public override void _Process(double delta)
@@ -48,17 +51,20 @@ public partial class ShapeShifter : Node
 
 	public void OnDamage()
 	{
-		if (_currentStateNode.Name == "Green")
+		_healthBar.Value -= GD.RandRange(0, 25);
+		GD.Print("health " + _healthBar.Value);
+
+		if (_healthBar.Value < 67 && _healthBar.Value > 33)
 		{
 			TransitionTo("Yellow");
 		}
-		else if (_currentStateNode.Name == "Yellow")
+		else if (_healthBar.Value <= 33 && _healthBar.Value > 0)
 		{
 			TransitionTo("Red");
 		}
-		else if (_currentStateNode.Name == "Red")
+		else if (_healthBar.Value <= 0)
 		{
-			TransitionTo("Green");
+			QueueFree();
 		}
 	}
 

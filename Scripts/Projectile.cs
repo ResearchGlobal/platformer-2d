@@ -17,7 +17,7 @@ public partial class Projectile : RigidBody2D
 	{
 		if (node.IsInGroup("enemy_npc"))
 		{
-			//cast to Shapeshifter - should really be some enemy prototype that inherits the onDmaage call
+			//cast to Shapeshifter - should really be some enemy prototype that abstracts the InDmaage call
 			var localNode = (ShapeShifter)node;
 			localNode.OnDamage();
 			QueueFree();
