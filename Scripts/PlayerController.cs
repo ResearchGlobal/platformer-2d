@@ -11,11 +11,40 @@ public partial class PlayerController : CharacterBody2D
 	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private Sprite2D _idleSprite;
 	private AnimatedSprite2D _walkSprite;
+	private WebSocketPeer _ws = new WebSocketPeer();
+	private bool _isConnected = false;
+	private WebSocketPeer.State _wsConnectState;
 
 	public override void _Ready()
 	{
+		_ws.ConnectToUrl("ws://192.168.2.206:4200");
 		_idleSprite = GetNode<Sprite2D>("IdleSprite");
 		_walkSprite = GetNode<AnimatedSprite2D>("WalkSprite");
+	}
+
+	public override void _Process(double delta)
+	{
+		_ws.Poll();
+		if (_isConnected == false)
+		{
+			_wsConnectState = _ws.GetReadyState();
+			GD.Print(_wsConnectState);
+			GD.Print(_ws.GetRequestedUrl());
+			GD.Print($"_wsConnectState: {_wsConnectState}");
+			if (_wsConnectState == WebSocketPeer.State.Open)
+			{
+				_isConnected = true;
+			}
+		}
+
+		// GD.Print(_ws.GetPacket());
+		if (_ws.GetReadyState() == WebSocketPeer.State.Open)
+		{
+			while (_ws.GetAvailablePacketCount() > 0)
+			{
+				GD.Print(_ws.GetPacket());
+			}
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
