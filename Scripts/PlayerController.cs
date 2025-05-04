@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class PlayerController : CharacterBody2D
@@ -11,40 +12,25 @@ public partial class PlayerController : CharacterBody2D
 	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private Sprite2D _idleSprite;
 	private AnimatedSprite2D _walkSprite;
-	private WebSocketPeer _ws = new WebSocketPeer();
-	private bool _isConnected = false;
-	private WebSocketPeer.State _wsConnectState;
 
-	public override void _Ready()
+	private static WSServer _server = new WSServer("http://localhost:8080/");
+
+	static async Task serverStart()
 	{
-		_ws.ConnectToUrl("ws://192.168.2.206:4200");
-		_idleSprite = GetNode<Sprite2D>("IdleSprite");
-		_walkSprite = GetNode<AnimatedSprite2D>("WalkSprite");
+		GD.Print("Starting server");
+		await _server.StartAsync();
 	}
 
-	public override void _Process(double delta)
+	public override async void _Ready()
 	{
-		_ws.Poll();
-		if (_isConnected == false)
-		{
-			_wsConnectState = _ws.GetReadyState();
-			GD.Print(_wsConnectState);
-			GD.Print(_ws.GetRequestedUrl());
-			GD.Print($"_wsConnectState: {_wsConnectState}");
-			if (_wsConnectState == WebSocketPeer.State.Open)
-			{
-				_isConnected = true;
-			}
-		}
+		_idleSprite = GetNode<Sprite2D>("IdleSprite");
+		_walkSprite = GetNode<AnimatedSprite2D>("WalkSprite");
+		await serverStart();
+	}
 
-		// GD.Print(_ws.GetPacket());
-		if (_ws.GetReadyState() == WebSocketPeer.State.Open)
-		{
-			while (_ws.GetAvailablePacketCount() > 0)
-			{
-				GD.Print(_ws.GetPacket());
-			}
-		}
+	public override async void _Process(double delta)
+	{
+		await _server.HandleInbounds();
 	}
 
 	public override void _PhysicsProcess(double delta)
