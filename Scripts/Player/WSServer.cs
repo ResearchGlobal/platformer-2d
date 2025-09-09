@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -10,20 +12,68 @@ using Godot;
 public class WSServer
 {
 	private readonly HttpListener _listener;
-	private readonly string _url;
+	private string _url = "http://192.168.2.125";
+	private readonly string _portSuffix = ":8080/";
 
-	public WSServer(string url)
+	public WSServer()
 	{
-		_url = url;
 		_listener = new HttpListener();
-		_listener.Prefixes.Add(url);
+	}
+
+	private IPAddress? GetWifiIpAddress()
+	{
+		IPAddress[] finalList = { };
+		// Get all network interfaces
+		NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+		foreach (NetworkInterface ni in interfaces)
+		{
+			// Check for operational interfaces (exclude loopback and tunnel)
+			if (
+				ni.OperationalStatus == OperationalStatus.Up
+				&& ni.NetworkInterfaceType != NetworkInterfaceType.Loopback
+				&& ni.NetworkInterfaceType != NetworkInterfaceType.Tunnel
+			)
+			{
+				// Get IP properties
+				var local = ni.GetIPProperties()
+					.UnicastAddresses.FirstOrDefault(addr =>
+						addr.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
+					);
+
+				if (local != null)
+				{
+					if (ni.Name == "Wi-Fi")
+					{
+						GD.Print($"Wi-Fi ip found at: {local.Address}");
+						return local.Address;
+					}
+				}
+			}
+		}
+		return null;
+
+		// //should wrap this in a try block
+		// string hostName = Dns.GetHostName();
+
+		// IPAddress[] list = Dns.GetHostAddresses(hostName);
+		// foreach (IPAddress ip in list)
+		// {
+		// 	GD.Print(ip.ToString());
+		// }
+		// return wifiIp;
 	}
 
 	public async Task StartAsync()
 	{
+		IPAddress? wifiIp = GetWifiIpAddress();
+		if (wifiIp != null)
+		{
+			_url = $"http://{wifiIp}{_portSuffix}";
+		}
+		GD.Print($"WebSocket server starting at {_url}");
+		_listener.Prefixes.Add(_url);
 		_listener.Start();
-
-		GD.Print($"WebSocket server started at {_url}");
 
 		// while (true)
 		// {

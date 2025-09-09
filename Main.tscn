@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=4 uid="uid://k8x2ryx0ixhk"]
 
-[ext_resource type="Script" path="res://Main.cs" id="1_6s73p"]
+[ext_resource type="Script" uid="uid://b46rtcoummxtx" path="res://Main.cs" id="1_6s73p"]
 [ext_resource type="TileSet" uid="uid://wnkgaydjjixa" path="res://Sprites/main.tres" id="2_6r1ek"]
-[ext_resource type="Script" path="res://Scripts/TileMapLayer.cs" id="3_mstxq"]
+[ext_resource type="Script" uid="uid://bkwt2m3722ds1" path="res://Scripts/TileMapLayer.cs" id="3_mstxq"]
 [ext_resource type="PackedScene" uid="uid://urtt82h8cscx" path="res://Entities/ShapeShifter.tscn" id="4_f72oi"]
 [ext_resource type="PackedScene" uid="uid://mc8de6fxo7fd" path="res://Entities/Player.tscn" id="6_met3o"]
 

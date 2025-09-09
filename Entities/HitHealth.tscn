@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cq2xnuemvurcs"]
 
-[ext_resource type="Script" path="res://Scripts/HitHealthManager.cs" id="1_0pcuw"]
+[ext_resource type="Script" uid="uid://dxc4cql6fwug5" path="res://Scripts/HitHealthManager.cs" id="1_0pcuw"]
 [ext_resource type="Texture2D" uid="uid://un3v57eq4j77" path="res://Sprites/buffalo/buffalo.png" id="1_8vr2b"]
 [ext_resource type="PackedScene" uid="uid://c1h78f3ar7y5s" path="res://Entities/ScoreLabel.tscn" id="2_1wmxg"]
 
@@ -86,8 +86,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_asrmm"]
 _data = {
-"RESET": SubResource("Animation_4i5n2"),
-"take-hit": SubResource("Animation_tnlwu")
+&"RESET": SubResource("Animation_4i5n2"),
+&"take-hit": SubResource("Animation_tnlwu")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6dbpy"]

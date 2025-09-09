@@ -13,7 +13,7 @@ public partial class PlayerController : CharacterBody2D
 	private Sprite2D _idleSprite;
 	private AnimatedSprite2D _walkSprite;
 
-	private static WSServer _server = new WSServer("http://localhost:8080/");
+	private static WSServer _server = new WSServer();
 
 	static async Task serverStart()
 	{
