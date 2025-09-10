@@ -9,11 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 
+public delegate void OnInboundCallback(string message);
+
 public class WSServer
 {
 	private readonly HttpListener _listener;
-	private string _url = "http://192.168.2.125";
 	private readonly string _portSuffix = ":8080/";
+	private string _url = "http://192.168.2.125:8080/";
 
 	public WSServer()
 	{
@@ -52,16 +54,6 @@ public class WSServer
 			}
 		}
 		return null;
-
-		// //should wrap this in a try block
-		// string hostName = Dns.GetHostName();
-
-		// IPAddress[] list = Dns.GetHostAddresses(hostName);
-		// foreach (IPAddress ip in list)
-		// {
-		// 	GD.Print(ip.ToString());
-		// }
-		// return wifiIp;
 	}
 
 	public async Task StartAsync()
@@ -74,30 +66,16 @@ public class WSServer
 		GD.Print($"WebSocket server starting at {_url}");
 		_listener.Prefixes.Add(_url);
 		_listener.Start();
-
-		// while (true)
-		// {
-		// 	HttpListenerContext context = await _listener.GetContextAsync();
-		// 	if (context.Request.IsWebSocketRequest)
-		// 	{
-		// 		ProcessWebSocketRequest(context);
-		// 	}
-		// 	else
-		// 	{
-		// 		context.Response.StatusCode = 400;
-		// 		context.Response.Close();
-		// 	}
-		// }
 	}
 
-	public async Task HandleInbounds()
+	public async Task HandleInbounds(OnInboundCallback callback)
 	{
 		while (true)
 		{
 			HttpListenerContext context = await _listener.GetContextAsync();
 			if (context.Request.IsWebSocketRequest)
 			{
-				ProcessWebSocketRequest(context);
+				ProcessWebSocketRequest(context, callback);
 			}
 			else
 			{
@@ -107,7 +85,10 @@ public class WSServer
 		}
 	}
 
-	private async void ProcessWebSocketRequest(HttpListenerContext context)
+	private async void ProcessWebSocketRequest(
+		HttpListenerContext context,
+		OnInboundCallback callback
+	)
 	{
 		HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
 		WebSocket webSocket = webSocketContext.WebSocket;
@@ -130,7 +111,8 @@ public class WSServer
 					{
 						// Deserialize JSON data
 						JsonDocument jsonDoc = JsonDocument.Parse(jsonString);
-						GD.Print("Received JSON: " + jsonString);
+						// GD.Print("Received JSON: " + jsonString);
+						callback(jsonString);
 
 						// Example response
 						var response = new

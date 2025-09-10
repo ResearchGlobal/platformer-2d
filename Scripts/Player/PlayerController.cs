@@ -12,6 +12,7 @@ public partial class PlayerController : CharacterBody2D
 	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private Sprite2D _idleSprite;
 	private AnimatedSprite2D _walkSprite;
+	private InputController inputController = new InputController();
 
 	private static WSServer _server = new WSServer();
 
@@ -30,14 +31,14 @@ public partial class PlayerController : CharacterBody2D
 
 	public override async void _Process(double delta)
 	{
-		await _server.HandleInbounds();
+		await _server.HandleInbounds(inputController.FireInputFromMessage);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
 
-		ReadInput(ref velocity);
+		inputController.ReadInput(ref velocity, _moveSpeed);
 
 		UpdateSpriteRendered(velocity.X);
 
@@ -49,16 +50,6 @@ public partial class PlayerController : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
-	}
-
-	private void ReadInput(ref Vector2 velocity)
-	{
-		Vector2 moveInput = Input.GetVector("left", "right", "up", "down");
-		velocity.X = moveInput.X * _moveSpeed;
-		if (moveInput.Y < 0f)
-		{
-			velocity.Y = moveInput.Y * _moveSpeed;
-		}
 	}
 
 	private void UpdateSpriteRendered(float velX)
