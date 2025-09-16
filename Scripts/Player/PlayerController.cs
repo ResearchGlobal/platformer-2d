@@ -22,7 +22,7 @@ public partial class PlayerController : CharacterBody2D
 
 	public override async void _Process(double delta)
 	{
-		await MainRoot.server.HandleInbounds(inputController.FireInputFromMessage);
+		await MainRoot.server.HandleInbounds(inputController.ProcessInputEvent);
 	}
 
 	public override void _PhysicsProcess(double delta)

@@ -15,16 +15,23 @@ public class InputController
 		}
 	}
 
-	public void FireInputFromMessage(string message)
+	public void ProcessJoystickEvent(Joystick? joystickCommand)
 	{
-		Joystick? joystickCommand = JsonConvert.DeserializeObject<Joystick>(message);
 		if (joystickCommand != null)
 		{
-			FireJoyStickEvent(joystickCommand);
+			FireJoystickEvent(joystickCommand);
 		}
 	}
 
-	public void FireJoyStickEvent(Joystick command)
+	public void ProcessInputEvent(string message)
+	{
+		//assert input event type: joystick, button press, etc...
+		//right now this is only configured to handle joystick input events
+		Joystick? joystickCommand = JsonConvert.DeserializeObject<Joystick>(message);
+		ProcessJoystickEvent(joystickCommand);
+	}
+
+	public void FireJoystickEvent(Joystick command)
 	{
 		//fire x and y separately
 		InputEventJoypadMotion joystickInputX = new InputEventJoypadMotion
