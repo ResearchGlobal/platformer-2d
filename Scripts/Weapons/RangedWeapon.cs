@@ -13,6 +13,7 @@ public partial class RangedWeapon : Node2D
 	private AnimatedSprite2D _use;
 	private AnimationPlayer _shoot;
 	private float _projectileSpeed = 100f;
+	private InputController input = new InputController();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 public class InputController
 {
-	public void ReadInput(ref Godot.Vector2 velocity, float moveSpeed)
+	public void ReadDirectionInput(ref Godot.Vector2 velocity, float moveSpeed)
 	{
-		Godot.Vector2 moveInput = Input.GetVector("left", "right", "up", "down");
+		Godot.Vector2 moveInput = Input.GetVector("left", "right", "down", "up", 0f);
 		velocity.X = moveInput.X * moveSpeed;
 		if (moveInput.Y < 0f)
 		{
@@ -17,11 +17,9 @@ public class InputController
 
 	public void FireInputFromMessage(string message)
 	{
-		GD.Print($"FIRE INPUT: {message}");
 		Joystick? joystickCommand = JsonConvert.DeserializeObject<Joystick>(message);
 		if (joystickCommand != null)
 		{
-			GD.Print(joystickCommand.Direction);
 			FireJoyStickEvent(joystickCommand);
 		}
 	}

@@ -112,6 +112,7 @@ public class WSServer
 						// Deserialize JSON data
 						JsonDocument jsonDoc = JsonDocument.Parse(jsonString);
 						// GD.Print("Received JSON: " + jsonString);
+						GD.Print("Received");
 						callback(jsonString);
 
 						// Example response

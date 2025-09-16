@@ -14,31 +14,22 @@ public partial class PlayerController : CharacterBody2D
 	private AnimatedSprite2D _walkSprite;
 	private InputController inputController = new InputController();
 
-	private static WSServer _server = new WSServer();
-
-	static async Task serverStart()
-	{
-		GD.Print("Starting server");
-		await _server.StartAsync();
-	}
-
 	public override async void _Ready()
 	{
 		_idleSprite = GetNode<Sprite2D>("IdleSprite");
 		_walkSprite = GetNode<AnimatedSprite2D>("WalkSprite");
-		await serverStart();
 	}
 
 	public override async void _Process(double delta)
 	{
-		await _server.HandleInbounds(inputController.FireInputFromMessage);
+		await MainRoot.server.HandleInbounds(inputController.FireInputFromMessage);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
 
-		inputController.ReadInput(ref velocity, _moveSpeed);
+		inputController.ReadDirectionInput(ref velocity, _moveSpeed);
 
 		UpdateSpriteRendered(velocity.X);
 

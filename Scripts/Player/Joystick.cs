@@ -29,7 +29,7 @@ public class Joystick
 			{
 				return JoyAxis.LeftX;
 			}
-			else if (xOrY == XorY.Y)
+			if (xOrY == XorY.Y)
 			{
 				return JoyAxis.LeftY;
 			}
@@ -40,7 +40,7 @@ public class Joystick
 			{
 				return JoyAxis.RightX;
 			}
-			else if (xOrY == XorY.Y)
+			if (xOrY == XorY.Y)
 			{
 				return JoyAxis.RightY;
 			}
